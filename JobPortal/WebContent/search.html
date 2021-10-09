@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Job Portal</title>
+
+<script>
+var url = new URL(window.location.href);
+var jtitle = url.searchParams.get("jtitle");
+var baseURL = "http://localhost:8085/JobPortal";
+function loadjobs(){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.overrideMimeType("application/json");
+	xmlhttp.open("GET", baseURL + "/searchJob", true);
+	xmlhttp.onreadystatechange = function(){
+		if (this.readyState == 4 && this.status == 200) {
+		    var jobs = JSON.parse(this.responseText);
+			document.getElementById("jobList").innerHTML = jobs.profile[0].title;
+		}
+	};
+	xmlhttp.send();
+}
+window.onload = function(){
+	loadjobs();
+}
+
+</script>
+
+
+</head>
+<body>
+<div id = "jobList"> </div>
+</body>
+</html>
