@@ -1,0 +1,142 @@
+body {
+	background-color: white;
+}
+
+.header {
+	padding-top: 3%;
+	padding-bottom: 3%;
+	color: #1686e7;
+}
+
+.searchbar {
+	margin-top: 5%;
+}
+
+input[type=text] {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	position: relative
+}
+
+button {
+	width: 100%;
+	background-color: #1686e7;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #0610a1;
+}
+
+.dropdown-div {
+	position: absolute;
+	z-index: 1;
+	background-color: white;
+	width: 93%;
+	padding-left: 2%;
+}
+
+.dropdown {
+	width: 98%;
+	display: inline-block;
+	padding-top: 1%;
+	padding-left: 1%;
+	padding-bottom: 1%;
+}
+
+.dropdown:hover {
+	background-color: #1686e7;
+}
+
+#errorskill {
+	color: red;
+	padding-left: 1%;
+}
+
+#selectedskill {
+	padding-left: 1%;
+}
+
+.skill {
+	color: green;
+	border: 1px solid;
+	width: 13%;
+	margin: 1%;
+	border-radius: 25px;
+	text-align: center;
+	display: inline-block;
+	padding: 0.5%;
+}
+
+.remove {
+	padding-left: 30%;
+}
+
+.header1 {
+	padding-top: 1%;
+	padding-bottom: 0%;
+	color: #1686e7;
+	padding-left: 5%;
+	border-bottom: 1px solid black;
+}
+
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	max-width: 80%;
+	margin-left: 5%;
+	padding-left: 2%;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	font-size: 18px;
+	margin-top: 3%;
+}
+
+.card button {
+	display: inline-block;
+	padding: 8px;
+	background-color: #1686e7;
+	text-align: center;
+	cursor: pointer;
+	width: 97%;
+	font-size: 20px;
+}
+
+.card button:hover {
+	background-color: #0610a1;
+}
+
+#alert {
+	display: none;
+}
+
+.alert {
+	padding: 20px;
+	background-color: green;
+	color: white;
+	margin-bottom: 15px;
+}
+
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.closebtn:hover {
+	color: #0610a1;
+}

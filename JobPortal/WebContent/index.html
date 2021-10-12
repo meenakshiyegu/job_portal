@@ -3,17 +3,44 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Job Portal</title>
+<link rel = "stylesheet" href = "css/style.css">
+<script src= "js/function.js"></script>
 </head>
 <body>
- <form action = "/JobPortal/search.html"	method = "get">
-  <fieldset>
-    <legend>Job Search:</legend>
-    <input type="text" id="jtitle" name="jtitle"  placeholder="job title or keyword">
-    <input type="text" id="jloc" name="jloc" placeholder="location , city , state">
-    <input type="text" id="jskill" name="jskill" placeholder="Enter skills(comma seperated)">
-    <input type="text" id="jcompany" name="jcompany" placeholder="company name">
-   <button type="submit" id="search" value="Search" >Search Job</button>
-  </fieldset>
-</form> 
+	<div class="header">
+		<h1>JOB SEARCH PORTAL</h1>
+	</div>
+	<form class="searchbar" action="/JobPortal/search.html" method="get">
+		<fieldset>
+			<legend>Job Search:</legend>
+			<input type="text" id="jtitle" name="jtitle" onkeyup="getjobtitle()"
+				placeholder="job title or keyword"><br>
+			<div class="dropdown-div" id="title"></div>
+			<input type="text" id="jloc" name="jloc" onkeyup="getLocation()"
+				placeholder="location , city , state">
+			<div class="dropdown-div" id="location"></div>
+			<input type="text" id="jskill" name="jskill" onkeyup="getSkill()"
+				placeholder="Enter skills(comma seperated)">
+			<div id="selectedskill"></div>
+			<input type="hidden" id = "skillvalue">
+			<div class="dropdown-div" id="skill"></div>
+			<div id="errorskill"></div>
+			<input type="text" id="jcompany" name="jcompany"
+				onkeyup="getCompany()" placeholder="company name">
+			<div class="dropdown-div" id="company"></div>
+			<button type="submit" id="search" value="Search" onclick="setvalue()">Search
+				Job</button>
+		</fieldset>
+	</form>
+
+	<script>
+	window.onclick = function(event) {
+		document.getElementById("title").innerHTML = '';
+		document.getElementById("location").innerHTML = '';
+		document.getElementById("skill").innerHTML = '';
+		document.getElementById("company").innerHTML = '';
+	}
+		
+	</script>
 </body>
 </html>

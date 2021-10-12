@@ -3,32 +3,123 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Job Portal</title>
-
+<link rel="stylesheet" href="css/style.css">
+<script src="js/function.js"></script>
 <script>
-var url = new URL(window.location.href);
-var jtitle = url.searchParams.get("jtitle");
-var baseURL = "http://localhost:8085/JobPortal";
-function loadjobs(){
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.overrideMimeType("application/json");
-	xmlhttp.open("GET", baseURL + "/searchJob", true);
-	xmlhttp.onreadystatechange = function(){
-		if (this.readyState == 4 && this.status == 200) {
-		    var jobs = JSON.parse(this.responseText);
-			document.getElementById("jobList").innerHTML = jobs.profile[0].title;
-		}
-	};
-	xmlhttp.send();
-}
-window.onload = function(){
-	loadjobs();
-}
+	var url = new URL(window.location.href);
+	var jtitle = url.searchParams.get("jtitle");
+	var jloc = url.searchParams.get("jloc");
+	var jskill = url.searchParams.get("jskill");
+	var jcompany = url.searchParams.get("jcompany");
 
+	var baseURL = "http://localhost:8085/JobPortal";
+	function loadjobs() {
+		document.getElementById("jtitle").value = jtitle;
+		document.getElementById("jloc").value = jloc;
+		document.getElementById("jcompany").value = jcompany;
+		var text = "";
+		for (let i = 0; i < jskill.split(",").length; i++) {
+			if (jskill.split(",")[i].length > 1) {
+				text += '<span class = "skill" id = "' + jskill.split(",")[i]
+						+ '">' + jskill.split(",")[i]
+						+ '<span class = "remove" onclick = "removeSkill('
+						+ "'" + jskill.split(",")[i] + "'"
+						+ ')">X</span></span>';
+			}
+		}
+		document.getElementById("selectedskill").innerHTML = text;
+		document.getElementById("skillvalue").value = jskill;
+
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.overrideMimeType("application/json");
+		xmlhttp.open("GET", baseURL + "/searchJob?jtitle=" + jtitle + "&jloc="
+				+ jloc + "&jskill=" + jskill + "&jcompany=" + jcompany, true);
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var jobs = JSON.parse(this.responseText);
+				var text = "";
+				for (let i = 0; i < jobs.profile.length; i++) {
+					var style = "color:green;";
+					if (jobs.profile[i].skill_matched == "0") {
+						style = "color:red;"
+					}
+					text += '<div class="card"><h1>'
+							+ jobs.profile[i].title
+							+ '</h1><p>Company name :<b>'
+							+ jobs.profile[i].company_name
+							+ ' </b>, Job type :<b>'
+							+ jobs.profile[i].job_type
+							+ '</b> , Company size :<b>'
+							+ jobs.profile[i].company_size
+							+ '</b></p>'
+							+ '<p>Location : '
+							+ jobs.profile[i].city_name
+							+ ','
+							+ jobs.profile[i].state_name
+							+ '</p>'
+							+ '<p>'
+							+ jobs.profile[i].company_description
+							+ '</p>'
+							+ '<p>Skills Required :<b>'
+							+ jobs.profile[i].skills
+							+ '</b></p>'
+							+ '<p style = '+style+'>'
+							+ jobs.profile[i].skill_matched
+							+ ' skill matched</p>'
+							+ '<p><button onclick = "successmessage()">Apply</button></p></div>';
+				}
+				if (text == '') {
+					text = "<div class='card'>NO RESULTS FOUND</div>";
+				}
+
+				document.getElementById("jobList").innerHTML = text;
+			}
+		};
+		xmlhttp.send();
+	}
+	window.onload = function() {
+		loadjobs();
+	}
 </script>
 
 
 </head>
 <body>
-<div id = "jobList"> </div>
+	<div class="header1">
+		<h1>JOB SEARCH PORTAL</h1>
+	</div>
+
+	<form class="searchbar" action="/JobPortal/search.html" method="get"
+		id="searchinside">
+		<fieldset>
+			<legend>Job Search:</legend>
+			<input type="text" id="jtitle" name="jtitle" onkeyup="getjobtitle()"
+				placeholder="job title or keyword">
+			<div class="dropdown-div" id="title"></div>
+			<input type="text" id="jloc" name="jloc" onkeyup="getLocation()"
+				placeholder="location , city , state">
+			<div class="dropdown-div" id="location"></div>
+			<input type="text" id="jskill" name="jskill" onkeyup="getSkill()"
+				placeholder="Enter skills(comma seperated)">
+			<div id="selectedskill"></div>
+			<input type="hidden" id="skillvalue">
+			<div class="dropdown-div" id="skill"></div>
+			<div id="errorskill"></div>
+			<input type="text" id="jcompany" name="jcompany"
+				onkeyup="getCompany()" placeholder="company name">
+			<div class="dropdown-div" id="company"></div>
+			<button type="submit" id="search" value="Search" onclick="setvalue()">Search
+				Job</button>
+		</fieldset>
+	</form>
+	<div class="alert" id="alert">
+		<span class="closebtn"
+			onclick="this.parentElement.style.display='none';">&times;</span>
+		Successfully Applied
+	</div>
+	<div id="jobList"></div>
+
+
+
 </body>
 </html>
